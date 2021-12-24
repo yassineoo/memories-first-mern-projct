@@ -4,8 +4,8 @@ const postSchema = mongoose.Schema({
     title : String,
     message : String,
     creator :String , 
-    tags: [string],
-    selectedFile : string ,
+    tags: [String],
+    selectedFile : String ,
     likeCount :{
         type : Number,
         default : 0
@@ -13,13 +13,12 @@ const postSchema = mongoose.Schema({
     ,
     createdAt: {
         type : Date , 
-        default : Date.now()
-
+        default : new Date(),
     }
 
 }
 )
 
-const PostMessage = mangoose.model(PostMessage , postSchema);
+const PostMessage = mongoose.model("postMessage" , postSchema);
 
 export default PostMessage;
