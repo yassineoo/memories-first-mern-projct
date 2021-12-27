@@ -13,11 +13,9 @@ const Form = ({currentId,setCurrentId})=> {
     const dispatch = useDispatch()
     const [postData,setPostData] = useState({
         creator:'', title:'', tags : '', selectedFile:'',message:'' });
-    console.log('current : ' , currentId);
-    console.log('current : ' , typeof currentId);
-    console.log('current test  : ' , currentId==null);
-    const post = useSelector((state)=> currentId? state.posts.find((post)=> post._id=currentId):null);
-
+   
+    const post = useSelector((state)=> currentId? state.posts.find((post)=> post._id==currentId):null);
+  
 
     useEffect(()=>{
         if (post ) setPostData(post);
@@ -26,12 +24,12 @@ const Form = ({currentId,setCurrentId})=> {
     const handleSubmit = (e)=>{
         e.preventDefault();
        if(currentId){
-         console.log('submit error')
-         updatePost(currentId,post)(dispatch);
+         console.log('submit error  ' , postData);
+
+         updatePost(currentId,postData)(dispatch);
         
        }
        else{
-           setPostData({...postData,createdAt:Date.now()})
            createPost(postData)(dispatch);
 
        }
@@ -60,7 +58,7 @@ const Form = ({currentId,setCurrentId})=> {
            <TextField  name = 'creator' variant = 'outlined' fullWidth label = 'creator' value={postData.creator} onChange={(e)=>setPostData({...postData,creator:e.target.value})} />
             <TextField  name = 'title' variant = 'outlined' fullWidth label = 'title' value={postData.title} onChange={(e)=>setPostData({...postData,title:e.target.value})} />
             <TextField  name = 'message' variant = 'outlined' fullWidth label = 'message' value={postData.message} onChange={(e)=>setPostData({...postData,message:e.target.value})} />
-           <TextField  name = 'tags' variant = 'outlined' fullWidth label = 'tags' value={postData.tags} onChange={(e)=>setPostData({...postData,tags:e.target.value})} />
+           <TextField  name = 'tags' variant = 'outlined' fullWidth label = 'tags' value={postData.tags} onChange={(e)=>setPostData({...postData,tags:e.target.value.split(',')})} />
            
                       <div className={classes.input}>
             <FileBase type='file' multipe = {false} onDone = {({base64})=> {setPostData({...postData,selectedFile:base64})}}/>
