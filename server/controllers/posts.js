@@ -20,14 +20,8 @@ try {
 const creatPost = async (req,res)=>{
        
     const post = req.body;
-    post.createdAt = new Date();
-
-
-    console.log(req.body);
-
-
           try {
-         const newPost = PostMessage(post);
+         const newPost = PostMessage({...post , creator:req.userId , createdAt : new Date().toISOString()});
           console.log(newPost);
           await newPost.save();
             
@@ -61,23 +55,41 @@ const likePost = async(req,res)=>{
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     
     const post = await PostMessage.findById(id);
-
-     await PostMessage.findByIdAndUpdate(id, {...post , "likeCount":post.likeCount+1},{new : true});
-      console.log('done');
-    res.send("likeCount + +");
+    console.log('id : ' , id);
+    console.log('id 2: ' , req.userId);
+    const index = post.likes.findIndex((id) => id == String(req.userId));
+    if (index ==-1){
+            post.likes.push(req.userId);
+            post.likeCount =  post.likeCount +1;
+    }
+    else {
+            post.likes = post.likes.filter ((id) => id!=  String(req.userId));
+            
+            post.likeCount = post.likeCount-1;
+            
+        
+    }
+     const updated = await PostMessage.findByIdAndUpdate(id, post,{new:true});
+     console .log(updated);
+    res.status(200).json(updated);
 }
 
 const deletePost = async(req,res)=>{
     const { id } = req.params;
     
-    
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+                try {
+                            if (!req.userId) res.status (400).json({message:'please sign in first'});
+                            if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const post = await PostMessage.findByIdAndDelete(id);
-    console.log(  'delete');
-    res.json(post);
+                            const post = await PostMessage.findByIdAndDelete(id);
+                            console.log(  'delete');
+                            res.json(post);
+                                
+            } catch (error) {
+                            console.log(error);
+                            res.status(500).json(error);
+            }
 }
-
 
 /*
 

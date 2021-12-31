@@ -1,51 +1,25 @@
-import react , {useEffect,useState} from "react";
-import {Container, AppBar , Grid, Typography, Grow  } from "@material-ui/core";
-import memories from './images/memories.png';
-import Posts from './components/posts/posts.js';
-import Form from './components/form/form.js';
-import { useDispatch } from "react-redux";
-import useStyles from './styles.js';
-import {getPosts } from './actions/posts.js';
+import react  from "react";
+import {Container  } from "@material-ui/core";
+import Home from './components/home/home.js';
+import Auth from './components/auth/auth.js';
+import NavBar from './components/navBar/navBar.js';
+import { BrowserRouter , Route ,Routes } from "react-router-dom";
 
 const App = ()=> {
-    const dispatch = useDispatch();
-    const classes = useStyles();
-    const [currentId, setCurrentId]= useState(null);
-    console.log('apphi  ', currentId)
-     useEffect(()=>{
-     getPosts()(dispatch);
-  },[dispatch , currentId])
 
     return (
+        <BrowserRouter>
+
         <Container maxidth = 'lg'>
-        
-        <AppBar className={classes.AppBar} position= 'center' color= 'inherit' >
-       
-        <Typography lassName={classes.heading} variant='h2' align ='center' >
-           memories
-           <img lassName={classes.img} src={memories} alt ='memories' height ='60'></img>
-        </Typography>
-        
-         </AppBar>
-       <Grow in>
-         <Container >
-                <Grid container   className={classes.mainCon}  justify='space-between' alignItems='stretch' spacing={4} >
-           
-                    <Grid item xs={12} sm={7}>
-                         <Posts  setCurrentId={setCurrentId} /> 
-                    </Grid>
-
-                     <Grid item xs={12} sm={5}>
-                         <Form currentId= {currentId}  setCurrentId={setCurrentId}/>
-                    </Grid>
-           
-                </Grid>
-         </Container>
-
-
-       </Grow>
-
+        <NavBar />
+        <Routes>
+         
+            <Route exact path='/' element={<Home/>}/>  
+            <Route exact path='/auth' element={<Auth/>}/>            
+            
+        </Routes>
         </Container>
+        </BrowserRouter>
     )
 
 }

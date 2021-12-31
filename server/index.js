@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
 import postsRoutes from './routes/posts.js';
+import usersRoutes from './routes/users.js';
 const app = express();
 dotenv.config();
 app.use(bodyParser.json({limite : "30mb" , extended : true }));
@@ -15,6 +16,7 @@ app.get( '/' , (req,res) => {
   res.send('welcome to memory api');
 })
 app.use('/posts',postsRoutes);
+app.use('/users', usersRoutes);
 
 const URL = process.env.URL 
 const PORT = process.env.PORT || 8000;

@@ -12,10 +12,10 @@ const Form = ({currentId,setCurrentId})=> {
     const classes = useStyles();
     const dispatch = useDispatch()
     const [postData,setPostData] = useState({
-        creator:'', title:'', tags : '', selectedFile:'',message:'' });
+         title:'', tags : '', selectedFile:'',message:'' });
    
     const post = useSelector((state)=> currentId? state.posts.find((post)=> post._id==currentId):null);
-  
+    const user = JSON.parse( localStorage.getItem('profile'));
 
     useEffect(()=>{
         if (post ) setPostData(post);
@@ -26,11 +26,11 @@ const Form = ({currentId,setCurrentId})=> {
        if(currentId){
          console.log('submit error  ' , postData);
 
-         updatePost(currentId,postData)(dispatch);
+         updatePost(currentId,postData )(dispatch);
         
        }
        else{
-           createPost(postData)(dispatch);
+           createPost({...postData , name : user?.result?.name})(dispatch);
 
        }
        clear();
@@ -38,24 +38,27 @@ const Form = ({currentId,setCurrentId})=> {
 
 
     }
-    const  handelCreator = ()=>{
-        
-        
-    }
     const clear = ()=>{
         
         setCurrentId(null);
         setPostData({
-            creator:'', title:'', tags : '', selectedFile:'',message:'' })
+             title:'', tags : '', selectedFile:'',message:'' })
+    }
 
-
+    if(!user ){
+        return (
+            <Paper className={classes.paper}>
+            <Typography variant='h6' align="center">
+               please sign in first to create your own memories and like others
+            </Typography>
+            </Paper>
+        )
     }
     return (
         <Paper className={classes.paper}>
                 <form autoComplete = 'off'  noValidate className={`${classes.root} ${classes.Form} `} onSubmit={handleSubmit} >
            
            <Typography variant='h6' align="center">{currentId? 'Editing':'Creating' } a memory</Typography>    
-           <TextField  name = 'creator' variant = 'outlined' fullWidth label = 'creator' value={postData.creator} onChange={(e)=>setPostData({...postData,creator:e.target.value})} />
             <TextField  name = 'title' variant = 'outlined' fullWidth label = 'title' value={postData.title} onChange={(e)=>setPostData({...postData,title:e.target.value})} />
             <TextField  name = 'message' variant = 'outlined' fullWidth label = 'message' value={postData.message} onChange={(e)=>setPostData({...postData,message:e.target.value})} />
            <TextField  name = 'tags' variant = 'outlined' fullWidth label = 'tags' value={postData.tags} onChange={(e)=>setPostData({...postData,tags:e.target.value.split(',')})} />
