@@ -1,4 +1,4 @@
-import React ,{useState ,useEffect} from "react";
+import {useState ,useEffect} from "react";
 import { AppBar , Avatar, Button, Typography,Toolbar } from "@material-ui/core";
 import {Link, useNavigate , useLocation} from "react-router-dom";
 import  useStyles from './styles.js';
@@ -23,7 +23,7 @@ const  NavBar = ()=>{
     const logOut = async () => {
       console.log('bye');
       try {
-            await dispatch ({type : LOGOUT , payload :user?.token});
+            dispatch ({type : LOGOUT , payload :user?.token});
             setUser(null);   
             navigate('/auth');  
            
@@ -35,12 +35,12 @@ const  NavBar = ()=>{
                 
         <AppBar className={classes.appBar} position= 'center' color= 'inherit' >
        <div className={classes.brandContainer}>
-        <Typography  component={Link} to='/' className={classes.heading} variant='h2' align ='center' >
+        <Typography  component={Link} to='/' variant='h3' className={classes.heading}  align ='center' >
           Memories
            <img className={classes.image} src={memories} alt ='memories' height ='60'></img>
         </Typography>
-        </div>
-            <Toolbar className={classes.toolbar} >
+        </div >
+            <Toolbar className={classes.toolbar} xs={12} sm={6}>
                   {user?(
                         <div className={classes.profile}>
                           <Avatar className={classes.purple} alt={user.result.name } src ={user.result.imageUrl}> {user.result.name.charAt(0)}

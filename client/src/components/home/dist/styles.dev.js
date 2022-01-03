@@ -25,7 +25,7 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     image: {
       marginLeft: '15px'
     }
-  }, theme.breakpoints.down('sm'), {
+  }, theme.breakpoints.down('xs'), {
     mainCon: {
       flexDirection: 'column-reverse'
     }

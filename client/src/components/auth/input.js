@@ -8,7 +8,7 @@ const Input = ({half,name ,autoFocus , handleChange ,handleShowPassword , type ,
 
 
     return (
-        <Grid xs={12} md={half?6:12}>
+        <Grid  item xs={12} md={half?6:12}>
             <TextField
                 name = {name}
                 label = {label}

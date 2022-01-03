@@ -31,10 +31,15 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       marginTop: theme.spacing(3)
     },
     submit: {
-      margin: theme.spacing(3, 0, 2)
+      margin: theme.spacing(3, 0, 2),
+      backgroundColor: theme.palette.secondary.main
     },
     googleButton: {
       marginBottom: theme.spacing(2)
+    },
+    "switch": {
+      align: 'center',
+      backgroundColor: 'orange'
     }
   };
 });

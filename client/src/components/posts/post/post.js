@@ -15,7 +15,7 @@ const Post = ({post,setCurrentId})=> {
     
     const Like =() => {
                 console.log(post);
-                 if (post.likes.length>0 ) 
+                 if (post.likes?.length>0 ) 
                 return (
                     post.likes.find((id) => id == (user?.result?.googleId || user?.result?._id)) ? 
                          <>           <ThumbUpAltIcon fontSize='small'/> {post.likes.length >1 ? 'You and  '+(post.likes.length-1)+' others likes this' : 'You like this post'}</>
@@ -69,7 +69,7 @@ const Post = ({post,setCurrentId})=> {
             <Typography variant="body2"  color='textSecondary' gutterBottom > {post.message}</Typography>
          
            </CardContent>
-            <CardActions>
+            <CardActions className={classes.cardActions} >
             <Button color='primary' size="small" onClick={like}  disabled = {!user?.result}>
                   <Like/>
             </Button>

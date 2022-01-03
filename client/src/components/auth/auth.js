@@ -63,7 +63,7 @@ const Auth = () => {
                     </Avatar>
                     <Typography variant='h5' > {isSignUp?'Sign Up':'Sign In'}</Typography>
                     <form  className={classes.form} onSubmit={handleSubmit} >
-                            <Grid container spacing={2} alignItems='space-between'>
+                            <Grid container spacing={3} columnSpacing={2} alignItems='space-between'>
                                     { isSignUp && (
                                         <>
                                         <Input name = "firstName" label = 'First Name ' handleChange={handleChange} autoFocus half/>
@@ -88,11 +88,12 @@ const Auth = () => {
                                             onSuccess ={ googleSucces}
                                             onFailure = {googleFailure}
                                         />
-                                            <Button onClick ={()=> {  setDtatForm (initialState);
+                                       <Button fullWidth className ={classes.switch} onClick ={()=> {  setDtatForm (initialState);
                                                                                      setIsSignUp((prevIsSignup) => !prevIsSignup);
                                                                                     setShowPassword(false);
                                                                                   }}
                                                  variant= 'contained'> Don't have account click to {isSignUp?'Sign Up':'Sign In'}</Button>
+                            
                                 </Grid>
                     </form>
                     </Paper>
